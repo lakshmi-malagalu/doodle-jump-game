@@ -54,10 +54,33 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         function jump() {
+            clearInterval(downTimeId);
             upTimeId = setInterval(function (){
                 doodlerBottomSpace += 20;
                 doodler.style.bottom = doodlerBottomSpace + 'px';
+                if(doodlerBottomSpace > 350){
+                    fall();
+                }
             }, 30) //invoke it every 30 seconds
+           
+        }
+
+        function fall(){
+            clearInterval(upTimeId);
+            downTimeId = setInterval(function(){
+                doodlerBottomSpace -= 5;
+                doodler.style.bottom = doodlerBottomSpace + 'px';
+                if(doodlerBottomSpace <= 0){
+                    gameOver();
+                }
+            },30) 
+        }
+
+        function gameOver(){
+            console.log("Game Over");
+            isGameOver = true;
+            clearInterval(upTimeId);
+            clearInterval(downTimeId);
         }
 
         function start(){
